@@ -1,6 +1,8 @@
 #include "Menu.h"
 #include <iostream>
 #include <conio.h>
+#include <fstream>
+
 
 
 /* 
@@ -13,18 +15,71 @@ std::string Menu::nazwa(int page)
 	switch (page)
 	{
 	case 0:
-		return "Tablica";
-		break;
-	case 1:
-		return "Lista";
-		break;
-	case 2:
-		return "Kopiec";
-		break;
-	case 3:
-		return "BST";
+		return "Zachlanny";
 		break;
 	}
+}
+//funkcja ³aduje graf z pliku
+void Menu::load(std::string name)
+{	
+	size_t size;
+	size_t number;
+	std::fstream file;
+	file.open(name, std::ios::in | std::ios::out);
+	if (file.good() == true)
+	{
+		std::cout << "Uzyskano dostep do pliku!" << std::endl;
+		std::string data;
+		getline(file, data);
+		getline(file, data);
+		try 
+		{
+			size = static_cast<size_t>(std::stoi(data));
+			matrix->init(size);
+		}
+		catch (std::exception)
+		{
+			std::cout << "Blad odczytu: std::exception 2" << '\n';
+		}
+		for (int i = 0; i < size; i++)
+		{
+			try
+			{
+				getline(file, data);
+				size_t pos = data.find(' ');
+				size_t initialPos = 0;
+				int count = 0;
+				while (count<size)
+				{
+					if (initialPos!=pos)
+					{
+						this->matrix->push(static_cast<int>(std::stoi(data.substr(initialPos, pos - initialPos))), i, count);
+						count++;
+					}
+					initialPos = pos + 1;
+					pos = data.find(' ', initialPos);
+				}
+
+			}
+			catch (std::exception)
+			{
+				std::cout << "Blad odczytu: std::exception "<<i<< '\n';
+			}
+		}
+		getline(file, data);
+		try
+		{
+			this->matrix->setOptimum(static_cast<long>(std::stoi(data)));
+		}
+		catch (std::exception)
+		{
+			std::cout << "Blad odczytu: std::exception 2" << '\n';
+		}
+
+		file.close();
+	}
+	else std::cout << "Dostep do pliku zostal zabroniony!" << std::endl;
+	system("pause");
 }
 //Pêtla menu
 void Menu::loop()
@@ -39,8 +94,8 @@ void Menu::loop()
 //Wyœwietlanie menu
 void Menu::display()
 {
-	std::cout << "========Projekt SDiZO========" << std::endl;
-	std::cout << "=========Marzec 2020=========" << std::endl;
+	std::cout << "========Projekt PEA========" << std::endl;
+	std::cout << "=========Pazdziernik 2020=========" << std::endl;
 	std::cout << "Sterowanie: a-lewo d-prawo w-gora s-dol Wyjscie-Esc" << std::endl;
 	std::cout << "" << std::endl;
 	std::cout << "<" << nazwa(page)<< ">" << std::endl;
@@ -51,53 +106,27 @@ void Menu::display()
 		{
 		case 0:
 			std::cout << "->" << "Zbuduj z Pliku" << std::endl;
-			std::cout << "  " << "Usun" << std::endl;
-			std::cout << "  " << "Dodaj" << std::endl;
-			std::cout << "  " << "Znajdz" << std::endl;
-			std::cout << "  " << "Utworz losowo" << std::endl;
+			std::cout << "  " << "Uruchom algorytm zachlanny " << std::endl;
 			std::cout << "  " << "Wyswietl" << std::endl;
+			std::cout << "  " << "Oblicz preprogramowany Cykl Hamiltona" << std::endl;
 			break;
 		case 1:
 			std::cout << "  " << "Zbuduj z Pliku " << std::endl;
-			std::cout << "->" << "Usun" << std::endl;
-			std::cout << "  " << "Dodaj" << std::endl;
-			std::cout << "  " << "Znajdz" << std::endl;
-			std::cout << "  " << "Utworz losowo" << std::endl;
+			std::cout << "->" << "Uruchom algorytm zachlanny" << std::endl;
 			std::cout << "  " << "Wyswietl" << std::endl;
+			std::cout << "  " << "Oblicz preprogramowany Cykl Hamiltona" << std::endl;
 			break;
 		case 2:
 			std::cout << "  " << "Zbuduj z Pliku " << std::endl;
-			std::cout << "  " << "Usun" << std::endl;
-			std::cout << "->" << "Dodaj" << std::endl;
-			std::cout << "  " << "Znajdz" << std::endl;
-			std::cout << "  " << "Utworz losowo" << std::endl;
-			std::cout << "  " << "Wyswietl" << std::endl;
-			break;
-
-		case 3:
-			std::cout << "  " << "Zbuduj z Pliku " << std::endl;
-			std::cout << "  " << "Usun" << std::endl;
-			std::cout << "  " << "Dodaj" << std::endl;
-			std::cout << "->" << "Znajdz" << std::endl;
-			std::cout << "  " << "Utworz losowo" << std::endl;
-			std::cout << "  " << "Wyswietl" << std::endl;
-			break;
-		case 4:
-			std::cout << "  " << "Zbuduj z Pliku " << std::endl;
-			std::cout << "  " << "Usun" << std::endl;
-			std::cout << "  " << "Dodaj" << std::endl;
-			std::cout << "  " << "Znajdz" << std::endl;
-			std::cout << "->" << "Utworz losowo" << std::endl;
-			std::cout << "  " << "Wyswietl" << std::endl;
-			break;
-		case 5:
-			std::cout << "  " << "Zbuduj z Pliku " << std::endl;
-			std::cout << "  " << "Usun" << std::endl;
-			std::cout << "  " << "Dodaj" << std::endl;
-			std::cout << "  " << "Znajdz" << std::endl;
-			std::cout << "  " << "Utworz losowo" << std::endl;
+			std::cout << "  " << "Uruchom algorytm zachlanny" << std::endl;
 			std::cout << "->" << "Wyswietl" << std::endl;
+			std::cout << "  " << "Oblicz preprogramowany Cykl Hamiltona" << std::endl;
 			break;
+		case 3:
+			std::cout << "  " << "Zbuduj z Pliku" << std::endl;
+			std::cout << "  " << "Uruchom algorytm zachlanny" << std::endl;
+			std::cout << "  " << "Wyswietl" << std::endl;
+			std::cout << "->" << "Oblicz preprogramowany Cykl Hamiltona" << std::endl;
 		}
 
 
@@ -162,263 +191,31 @@ void Menu::input()
 				std::string name;
 				std::cout << "Podaj nazwe pliku: ";
 				std::cin >> name;
-				this->timer->startCounter();
-				this->array->load(name);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->array->display();
+				load(name);
+			}
+			break;
+			case 1:
+			{
+				int strt = 0;
+				int value;
+				std::cout << "Podaj wierzcholek startowy: ";
+				std::cin >> strt;
+				std::cout << "\n";
+				value = this->matrix->nearestNeighbour(strt);
+				std::cout <<"Dlugosc trasy: "<<value<<" PRD= "<<100*value/this->matrix->getOptimum()<<"%\n";
 				system("pause");
+			}
+				break;
+			case 2:
+				this->matrix->display();
+				system("pause");
+				break;
+			case 3:
+				this->load("bays29.tsp");
+				this->matrix->hamiltonCycle();
+				system("pause");
+				break;
 
-			}
-			break;
-			case 1:
-				std::cout << "Podaj liczbe do usuniecia:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->array->popNumber(i);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->array->display();
-				system("pause");
-				break;
-			case 2:
-				size_t j;
-				std::cout << "Podaj index do na ktory chcesz dodac:";
-				std::cin >> j;
-				std::cout << "Podaj wartosc:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->array->push(i, j);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->array->display();
-				system("pause");
-				break;
-			case 3:
-				std::cout << "Podaj liczbe do znalezienia:";
-				std::cin >> i;
-				this->timer->startCounter();
-				if (this->array->search(i))std::cout << "Znaleziono ";
-				else std::cout << "Nie znaleziono ";
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				//this->array->display();
-				system("pause");
-				break;
-			case 4:
-				std::cout << "Podaj wielkosc tablicy:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->array->random(i);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->array->display();
-				system("pause");
-				break;
-			case 5:
-				this->array->display();
-				system("pause");
-				break;
-			}
-			break;
-		case 1:
-			switch (this->index)
-			{
-			case 0:
-			{
-				std::string name;
-				std::cout << "Podaj nazwe pliku: ";
-				std::cin >> name;
-				this->timer->startCounter();
-				this->list->load(name);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->list->display();
-				system("pause");
-			}
-			break;
-			case 1:
-				std::cout << "Podaj numer do usuniecia:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->list->popNumber(i);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->list->display();
-				system("pause");
-				break;
-			case 2:
-			{
-				size_t j;
-				std::cout << "Podaj index do na ktory chcesz dodac:";
-				std::cin >> j;
-				std::cout << "Podaj wartosc:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->list->push(i, j);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->list->display();
-				system("pause");
-			}
-			break;
-			case 3:
-				std::cout << "Podaj liczbe do znalezienia:";
-				std::cin >> i;
-				this->timer->startCounter();
-				if (this->list->search(i))std::cout << "Znaleziono ";
-				else std::cout << "Nie znaleziono ";
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				//this->list->display();
-				system("pause");
-				break;
-			case 4:
-				std::cout << "Podaj wielkosc listy:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->list->random(i);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->list->display();
-				system("pause");
-				break;
-			case 5:
-				this->list->display();
-				system("pause");
-				break;
-			}
-			break;
-		case 2:
-			switch (this->index)
-			{
-			case 0:
-			{
-				std::string name;
-				std::cout << "Podaj nazwe pliku: ";
-				std::cin >> name;
-				this->timer->startCounter();
-				this->heap->load(name);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->heap->display("", "", 0);
-				system("pause");
-			}
-			break;
-			case 1:
-				std::cout << "Podaj numer do usuniecia:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->heap->pop(i);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->heap->display("", "", 0);
-				system("pause");
-				break;
-			case 2:
-			{
-
-				std::cout << "Podaj wartosc:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->heap->push(i);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->heap->display("", "", 0);
-				system("pause");
-			}
-			break;
-			case 3:
-				std::cout << "Podaj liczbe do znalezienia:";
-				std::cin >> i;
-				this->timer->startCounter();
-				if (this->heap->search(i))std::cout << "Znaleziono";
-				else std::cout << "Nie znaleziono";
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				//this->heap->display("", "", 0);
-				system("pause");
-				break;
-			case 4:
-				std::cout << "Podaj wielkosc kopca:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->heap->random(i);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->heap->display("", "", 0);
-				system("pause");
-				break;
-			case 5:
-				this->heap->display("", "", 0);
-				system("pause");
-				break;
-			}
-			break;
-		case 3:
-			switch (this->index)
-			{
-			case 0:
-			{
-				std::string name;
-				std::cout << "Podaj nazwe pliku: ";
-				std::cin >> name;
-				this->timer->startCounter();
-				this->tree->load(name);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->tree->display("", "", this->tree->returnRoot());
-				system("pause");
-			}
-			break;
-			case 1:
-				std::cout << "Podaj numer do usuniecia:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->tree->pop(this->tree->findNode(i));
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->tree->display("", "", this->tree->returnRoot());
-				system("pause");
-				break;
-			case 2:
-			{
-
-				std::cout << "Podaj wartosc:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->tree->push(i);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->tree->display("", "", this->tree->returnRoot());
-				system("pause");
-			}
-			break;
-			case 3:
-				std::cout << "Podaj liczbe do znalezienia:";
-				std::cin >> i;
-				this->timer->startCounter();
-				if (this->tree->search(i))std::cout << "Znaleziono";
-				else std::cout << "Nie znaleziono";
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				//this->tree->display("", "", this->tree->returnRoot());
-				system("pause");
-				break;
-			case 4:
-				std::cout << "Podaj wielkosc kopca:";
-				std::cin >> i;
-				this->timer->startCounter();
-				this->tree->random(i);
-				this->time = this->timer->getCounter();
-				writeTime(this->time);
-				this->tree->display("", "", this->tree->returnRoot());
-				system("pause");
-				break;
-			case 5:
-				this->tree->display("", "", this->tree->returnRoot());
-				system("pause");
-				break;
 			}
 			break;
 		}
@@ -441,11 +238,7 @@ void Menu::writeTime(double time)
 //Inicjalizacja wszystkich u¿ywanych obiektów oraz uruchomienie pêtli
 Menu::Menu()
 {
-	this->array = new Array();
-	this->list = new List();
-	this->heap = new BinaryHeap();	
-	this->tree = new BST();
-	this->timer = new Timer();
+	this->matrix = new Matrix();
 	this->loop();
 }
 
