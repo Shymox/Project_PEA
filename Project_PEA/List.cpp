@@ -27,15 +27,17 @@ void List::popElem(ListElem* elem)
 		delete elem;
 		this->size--;
 }
+/*
 //Utworzenie listy z losowych elementów o podanym rozmiarze
 void List::random(int size)
 {
 	this->erase();
-	/*for (int i = 0; i < size;i++)
+	for (int i = 0; i < size;i++)
 	{
 		pushBack(rand());
-	}*/
+	}
 }
+
 
 //Za³adowanie listy z pliku
 void List::load(std::string name)
@@ -77,8 +79,10 @@ void List::load(std::string name)
 			this->size = 0;
 		}
 	}
-	else std::cout << "Dostep do pliku zostal zabroniony!" << std::endl;*/
+	else std::cout << "Dostep do pliku zostal zabroniony!" << std::endl;
 }
+*/
+
 //Dodanie elementu na pocz¹tek listy
 void List::pushFront(int node)
 {
@@ -304,9 +308,13 @@ int List::returnSize()
 {
 	return this->size;
 }
-int List::returnTail()
+int List::returnLNode()
 {
-	return this->tail->node;
+	if (this->tail != nullptr)
+	{
+		return this->tail->node;
+	}
+	return -1;
 }
 //zwraca pierwszy element listy
 ListElem* List::returnHead()

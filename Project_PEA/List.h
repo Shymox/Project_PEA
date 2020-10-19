@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "Structures.h"
 
 
 struct ListElem
@@ -44,7 +43,7 @@ public:
 
 	int returnSize();
 
-	int returnTail();
+	int returnLNode();
 
 	ListElem* returnHead();
 

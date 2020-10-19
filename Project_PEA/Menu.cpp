@@ -211,7 +211,7 @@ void Menu::input()
 				system("pause");
 				break;
 			case 3:
-				this->load("bays29.tsp");
+				this->load("m6.atsp");
 				this->matrix->hamiltonCycle();
 				system("pause");
 				break;

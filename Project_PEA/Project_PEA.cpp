@@ -1,9 +1,9 @@
 ﻿// Project_PEA.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
 //
 
-#include <iostream>
 #include "Menu.h"
 
+//funkcja main programu
 int main()
 {
     Menu* menu = new Menu();

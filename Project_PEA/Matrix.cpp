@@ -4,13 +4,14 @@
 #include <time.h>
 #include <fstream>
 
-
+//Funkcja obliczaj¹ca wartoœæ hardcodowanego cyklu hamiltona
 void Matrix::hamiltonCycle()
 {
-	int order[29] = { 24,7,20,8,6,11,1,29,17,28,13,25,12,23,27,21,3,22,26,10,4,15,16,14,9,19,5,2,18 };
+	//tablica zawieraj¹ca cykl hamiltona
+	int order[6] = { 1,2,3,4,5,6 };
 	int start = order[0];
 	int cycle = 0;
-	for (int i = 1; i < 29; i++)
+	for (int i = 1; i < 6; i++)
 	{
 		cycle += this->matrix[order[i]-1][ order[i - 1]-1];
 	}
@@ -26,32 +27,39 @@ void Matrix::hamiltonCycle()
 	}
 }
 
+//Funkcja realizuj¹ca algorytm Najbli¿szego sasiada
 int Matrix::nearestNeighbour(size_t start)
 {
 	int cycle = 0;
 	int temp;
 	List* list = new List();
 	list->pushBack(start);
-	
+	//Petla wykonujaca sie dopoki nie przejdziemy przez wszystkie wiezcholki
 	while (list->returnSize() < this->size)
 	{
 		int tmp = INT_MAX;
 		int count = 0;
-		temp = list->returnTail();
+		temp = list->returnLNode();
+		//Petla przechodzaca przez wszystkie wierzcholki
 		for (int i = 0; i < this->size; i++)
 		{
+			//Sprawdzamy czy dany wierzcholek nie byl juz wybrany oraz czy odleglosc polaczonej z nim krawedzi jest mniejsza niz poprzedniej najlepszej krawedzi
 			if (!list->search(i) && this->matrix[i][temp] < tmp)
 			{
 				tmp = this->matrix[i][temp];
 				count=i;
 			}
 		}
+		//dodajemy wybrany wierzcholek do listy
 		list->pushBack(count);
 		cycle += (tmp);
 	}
-	cycle += matrix[list->returnFNode()][list->returnTail()];
+	//Obliczamy cykl hamiltona
+	cycle += matrix[list->returnFNode()][list->returnLNode()];
+	//Wyswietlamy liste wiezcholkow
 	list->display();
 	std::cout << "\n";
+	//zwracamy dlugosc cyklu hamiltona
 	return cycle;
 }
 
