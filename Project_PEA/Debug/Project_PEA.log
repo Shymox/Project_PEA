@@ -1,7 +1,0 @@
-﻿  Menu.cpp
-C:\Users\Szymon\source\repos\Project_PEA\Project_PEA\Menu.cpp(44,21): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-C:\Users\Szymon\source\repos\Project_PEA\Project_PEA\Menu.cpp(52,17): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-C:\Users\Szymon\source\repos\Project_PEA\Project_PEA\Menu.cpp(26,9): warning C4101: "number": lokalna zmienna, do której nie istnieje odwołanie
-C:\Users\Szymon\source\repos\Project_PEA\Project_PEA\Menu.cpp(185,8): warning C4101: "i": lokalna zmienna, do której nie istnieje odwołanie
-C:\Users\Szymon\source\repos\Project_PEA\Project_PEA\Menu.cpp(21): warning C4715: "Menu::nazwa”: niewszystkie ścieżki kodu zwracają wartość
-  Project_PEA.vcxproj -> C:\Users\Szymon\source\repos\Project_PEA\Debug\Project_PEA.exe
