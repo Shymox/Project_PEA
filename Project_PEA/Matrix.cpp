@@ -63,6 +63,32 @@ int Matrix::nearestNeighbour(size_t start)
 	return cycle;
 }
 
+void Matrix::bruteForce()
+{
+	generatePerm(this->array->returnSize());
+	std::cout << "\nKONIEC\n";
+	this->displayAnsBF();
+	
+}
+void Matrix::displayAnsBF()
+{
+	for (int i = this->answers->returnSize() - 2; i >=0 ; i--)
+	{
+		int j = this->answers->returnNode(i);
+		std::cout << j << "(" << 100 * static_cast<float>(j) / this->optimum << "%)\n";
+	}
+	std::cout << "0 ";
+	this->sequence->display();
+	std::cout << "\n";
+}
+void Matrix::dynamicProgramming()
+{
+	DynamicProgramming* DP = new DynamicProgramming(this->matrix,this->size);
+	DP->DP(this->matrix);
+	
+	DP->display();
+	delete DP;
+}
 
 //dodanie krawedzi do macierz
 void Matrix::push(int value,size_t start,size_t end)
@@ -82,7 +108,15 @@ int Matrix::getOptimum()
 void Matrix::init(size_t size)
 {
 	this->erase();
+	this->sequence = new Array();
+	this->array = new Array();
+	this->answers = new List();
+	this->answers->pushFront(INT_MAX);
 	this->size = size;
+	for (int i = 1; i < this->size; i++)
+	{
+		array->pushBack(i);
+	}
 	this->matrix = new int* [this->size];
 	for (size_t i = 0;i < this->size;i++)
 	{
@@ -104,10 +138,81 @@ void Matrix::erase()
 		}
 		delete[] this->matrix;
 	}
+	if (this->sequence != nullptr)
+	{
+		delete this->sequence;
+	}
+	if (this->array != nullptr)
+	{
+		delete this->array;
+	}
+	if (this->answers != nullptr)
+	{
+		delete this->answers;
+	}
+	this->sequence = nullptr;
+	this->array = nullptr;
+	this->answers = nullptr;
 	this->matrix = nullptr;
 	this->size = 0;
 	this->start = 0;
 	this->number = 0;
+}
+
+
+int Matrix::countPermLeft()
+{
+	int count = 0;
+	count += this->matrix[0][this->array->returnValue(0)];
+	for (int i = 1; i < this->array->returnSize(); i++)
+	{
+		count += this->matrix[this->array->returnValue(i-1)][this->array->returnValue(i)];
+	}
+	count += this->matrix[this->array->returnValue(this->array->returnSize() - 1)][0];
+	return count;
+}
+int Matrix::getValue(size_t start, size_t end)
+{
+	if (start >= 0 && start < this->size && end >= 0 && end < this->size)
+		return this->matrix[end][start];
+	return 0;
+}
+void Matrix::generatePerm(int size)
+{
+	if (size == 1)
+	{
+		int j = this->countPermLeft();
+		if (j < this->answers->returnFNode())
+		{
+			this->answers->pushFront(j);
+			this->sequence->copy(this->array);
+		}
+		return;
+	}
+
+		for (int i=0;i<size;i++)
+		{
+			generatePerm(size - 1);
+			if (size % 2)
+			{
+				this->array->swap(i, size - 1);
+			}
+			else
+			{
+				this->array->swap(0, size - 1);
+			}
+			generatePerm(size - 1);
+		}
+}
+
+void Matrix::branchAndBound()
+{
+
+}
+
+size_t Matrix::returnSize()
+{
+	return this->size;
 }
 //wyœwietlenie zawartoœci macierzy
 void Matrix::display()
@@ -128,12 +233,14 @@ void Matrix::display()
 //konstruktor Matrix
 Matrix::Matrix()
 {
-
+	this->sequence = nullptr;
+	this->array = nullptr;
+	this->answers = nullptr;
 	this->matrix = nullptr;
 	this->size = 0;
 	this->start = 0;
 	this->number = 0;
-	this->optimum = 0;
+	this->optimum = INT_MAX;
 }
 //destruktor Matrix
 Matrix::~Matrix()

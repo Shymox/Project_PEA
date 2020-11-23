@@ -17,6 +17,12 @@ std::string Menu::nazwa(int page)
 	case 0:
 		return "Zachlanny";
 		break;
+	case 1:
+		return "Brute Force";
+		break;
+	case 2:
+		return "Dynamic Programming";
+		break;
 	}
 }
 //funkcja ³aduje graf z pliku
@@ -106,25 +112,25 @@ void Menu::display()
 		{
 		case 0:
 			std::cout << "->" << "Zbuduj z Pliku" << std::endl;
-			std::cout << "  " << "Uruchom algorytm zachlanny " << std::endl;
+			std::cout << "  " << "Uruchom algorytm " << std::endl;
 			std::cout << "  " << "Wyswietl" << std::endl;
 			std::cout << "  " << "Oblicz preprogramowany Cykl Hamiltona" << std::endl;
 			break;
 		case 1:
 			std::cout << "  " << "Zbuduj z Pliku " << std::endl;
-			std::cout << "->" << "Uruchom algorytm zachlanny" << std::endl;
+			std::cout << "->" << "Uruchom algorytm" << std::endl;
 			std::cout << "  " << "Wyswietl" << std::endl;
 			std::cout << "  " << "Oblicz preprogramowany Cykl Hamiltona" << std::endl;
 			break;
 		case 2:
 			std::cout << "  " << "Zbuduj z Pliku " << std::endl;
-			std::cout << "  " << "Uruchom algorytm zachlanny" << std::endl;
+			std::cout << "  " << "Uruchom algorytm" << std::endl;
 			std::cout << "->" << "Wyswietl" << std::endl;
 			std::cout << "  " << "Oblicz preprogramowany Cykl Hamiltona" << std::endl;
 			break;
 		case 3:
 			std::cout << "  " << "Zbuduj z Pliku" << std::endl;
-			std::cout << "  " << "Uruchom algorytm zachlanny" << std::endl;
+			std::cout << "  " << "Uruchom algorytm" << std::endl;
 			std::cout << "  " << "Wyswietl" << std::endl;
 			std::cout << "->" << "Oblicz preprogramowany Cykl Hamiltona" << std::endl;
 		}
@@ -202,10 +208,71 @@ void Menu::input()
 				std::cin >> strt;
 				std::cout << "\n";
 				value = this->matrix->nearestNeighbour(strt);
-				std::cout <<"Dlugosc trasy: "<<value<<" PRD= "<<100*value/this->matrix->getOptimum()<<"%\n";
+				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
 				system("pause");
 			}
+			break;
+			case 2:
+				this->matrix->display();
+				system("pause");
 				break;
+			case 3:
+				this->load("m6.atsp");
+				this->matrix->hamiltonCycle();
+				system("pause");
+				break;
+
+			}
+			break;
+
+		case 1:
+			switch (this->index)
+			{
+			case 0:
+			{
+				std::string name;
+				std::cout << "Podaj nazwe pliku: ";
+				std::cin >> name;
+				load(name);
+			}
+			break;
+			case 1:
+			{
+				std::cout << "\n";
+				this->matrix->bruteForce();
+				system("pause");
+			}
+			break;
+			case 2:
+				this->matrix->display();
+				system("pause");
+				break;
+			case 3:
+				this->load("m6.atsp");
+				this->matrix->hamiltonCycle();
+				system("pause");
+				break;
+
+			}
+			break;
+		case 2:
+			switch (this->index)
+			{
+			case 0:
+			{
+				std::string name;
+				std::cout << "Podaj nazwe pliku: ";
+				std::cin >> name;
+				load(name);
+			}
+			break;
+			case 1:
+			{
+				std::cout << "\n";
+				this->matrix->dynamicProgramming();
+				system("pause");
+			}
+			break;
 			case 2:
 				this->matrix->display();
 				system("pause");
@@ -219,7 +286,6 @@ void Menu::input()
 			}
 			break;
 		}
-
 		break;
 	case 27:
 		_exit(0);

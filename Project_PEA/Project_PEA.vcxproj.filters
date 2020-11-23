@@ -27,6 +27,12 @@
     <ClCompile Include="List.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Array.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicProgramming.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h">
@@ -38,5 +44,37 @@
     <ClInclude Include="List.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="Array.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicProgramming.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bays29.tsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="gil262.tsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="m6.atsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="m3.tsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="m9.atsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="m10.atsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="m11.atsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="m12.atsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
   </ItemGroup>
 </Project>

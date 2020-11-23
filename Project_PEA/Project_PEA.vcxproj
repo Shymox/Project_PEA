@@ -139,15 +139,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Array.cpp" />
+    <ClCompile Include="DynamicProgramming.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Project_PEA.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Array.h" />
+    <ClInclude Include="DynamicProgramming.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Menu.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bays29.tsp" />
+    <None Include="gil262.tsp" />
+    <None Include="m10.atsp" />
+    <None Include="m11.atsp" />
+    <None Include="m12.atsp" />
+    <None Include="m3.tsp" />
+    <None Include="m6.atsp" />
+    <None Include="m9.atsp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
