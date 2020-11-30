@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <time.h>
 #include <fstream>
+#include "BranchnBound.h"
 
 //Funkcja obliczaj¹ca wartoœæ hardcodowanego cyklu hamiltona
 void Matrix::hamiltonCycle()
@@ -207,7 +208,7 @@ void Matrix::generatePerm(int size)
 
 void Matrix::branchAndBound()
 {
-
+	BranchnBound* branchNbound = new BranchnBound(this->matrix, this->size);
 }
 
 size_t Matrix::returnSize()

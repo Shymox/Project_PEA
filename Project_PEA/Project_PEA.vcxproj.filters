@@ -33,6 +33,12 @@
     <ClCompile Include="DynamicProgramming.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="BranchnBound.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="ReductionMatrixes.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h">
@@ -50,6 +56,12 @@
     <ClInclude Include="DynamicProgramming.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="BranchnBound.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="ReductionMatrixes.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bays29.tsp">
@@ -59,9 +71,6 @@
       <Filter>Pliki źródłowe</Filter>
     </None>
     <None Include="m6.atsp">
-      <Filter>Pliki źródłowe</Filter>
-    </None>
-    <None Include="m3.tsp">
       <Filter>Pliki źródłowe</Filter>
     </None>
     <None Include="m9.atsp">
@@ -74,6 +83,12 @@
       <Filter>Pliki źródłowe</Filter>
     </None>
     <None Include="m12.atsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="m3.tsp">
+      <Filter>Pliki źródłowe</Filter>
+    </None>
+    <None Include="m4.tsp">
       <Filter>Pliki źródłowe</Filter>
     </None>
   </ItemGroup>

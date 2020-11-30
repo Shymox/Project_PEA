@@ -60,7 +60,7 @@ void DynamicProgramming::setup(int** matrix)
 		this->array[i][1 << this->START | 1 << i] = matrix[this->START][i];
 	}
 }
-
+//funkcja 
 void DynamicProgramming::solve(int** matrix)
 {
 	for (int r = 3; r <= this->size; r++)

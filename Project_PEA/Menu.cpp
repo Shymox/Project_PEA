@@ -23,6 +23,9 @@ std::string Menu::nazwa(int page)
 	case 2:
 		return "Dynamic Programming";
 		break;
+	case 3:
+		return "B&B";
+		break;
 	}
 }
 //funkcja ³aduje graf z pliku
@@ -270,6 +273,36 @@ void Menu::input()
 			{
 				std::cout << "\n";
 				this->matrix->dynamicProgramming();
+				system("pause");
+			}
+			break;
+			case 2:
+				this->matrix->display();
+				system("pause");
+				break;
+			case 3:
+				this->load("m6.atsp");
+				this->matrix->hamiltonCycle();
+				system("pause");
+				break;
+
+			}
+			break;
+		case 3:
+			switch (this->index)
+			{
+			case 0:
+			{
+				std::string name;
+				std::cout << "Podaj nazwe pliku: ";
+				std::cin >> name;
+				load(name);
+			}
+			break;
+			case 1:
+			{
+				std::cout << "\n";
+				this->matrix->branchAndBound();
 				system("pause");
 			}
 			break;

@@ -45,8 +45,6 @@ public:
 
 	void branchAndBound();
 
-	Matrix reduction(Matrix matrix);
-
 	size_t returnSize();
 
 	void display();
