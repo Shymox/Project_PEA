@@ -18,6 +18,8 @@ public:
 
 	void pop(int index);
 
+	void fSwap(int indexa, int indexb);
+
 	void swap(int indexa, int indexb);
 
 	bool search(int number);

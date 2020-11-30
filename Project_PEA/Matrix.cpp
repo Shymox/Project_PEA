@@ -196,11 +196,11 @@ void Matrix::generatePerm(int size)
 			generatePerm(size - 1);
 			if (size % 2)
 			{
-				this->array->swap(i, size - 1);
+				this->array->fSwap(i, size - 1);
 			}
 			else
 			{
-				this->array->swap(0, size - 1);
+				this->array->fSwap(0, size - 1);
 			}
 			generatePerm(size - 1);
 		}
@@ -209,6 +209,7 @@ void Matrix::generatePerm(int size)
 void Matrix::branchAndBound()
 {
 	BranchnBound* branchNbound = new BranchnBound(this->matrix, this->size);
+	delete branchNbound;
 }
 
 size_t Matrix::returnSize()

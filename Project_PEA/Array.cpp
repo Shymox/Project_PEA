@@ -97,6 +97,13 @@ void Array::pop(int index)
 	}
 }
 
+void Array::fSwap(int indexa, int indexb)
+{
+	int temp = this->array[indexa];
+	this->array[indexa] = this->array[indexb];
+	this->array[indexb] = temp;
+}
+
 void Array::swap(int indexA, int indexB)
 {
 	if (indexA < this->size && indexB <this->size && indexA>=0 && indexB>=0)

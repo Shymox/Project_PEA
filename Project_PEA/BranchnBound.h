@@ -22,7 +22,7 @@ public:
 
 	int firstUpperBound(int** matrix);
 
-	void permutation(int pathSize, size_t level);
+	void permutation(int pathSize, size_t level, size_t prev);
 
 	void erase();
 

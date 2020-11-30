@@ -129,7 +129,10 @@ int ReductionMatrixes::pushBack(int nodeTo,int nodeFrom)
 				matrixTemp[i][j] += -min;
 			}
 		}
-		reduction += min;
+		if (min != INT_MAX)
+		{
+			reduction += min;
+		}
 	}
 	for (int i = 0; i <= this->size; i++)
 	{
@@ -150,7 +153,10 @@ int ReductionMatrixes::pushBack(int nodeTo,int nodeFrom)
 			}
 
 		}
-		reduction += min;
+		if (min != INT_MAX)
+		{
+			reduction += min;
+		}
 	}
 	this->matrix.push_back(matrixTemp);
 
