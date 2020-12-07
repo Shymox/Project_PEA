@@ -71,7 +71,10 @@ int ReductionMatrixes::pushBack()
 			
 			std::cout << matrixTemp[i][j] << " ";
 		}
-		reduction += min;
+		if (min != INT_MAX)
+		{
+			reduction += min;
+		}
 	}
 	for (size_t i = 0; i < size; i++)
 	{
@@ -88,11 +91,13 @@ int ReductionMatrixes::pushBack()
 			if (i != j)
 			{
 				matrixTemp[j][i] += -min;
-				
 			}
 			
 		}
-		reduction += min;
+		if (min != INT_MAX)
+		{
+			reduction += min;
+		}
 	}
 	this->matrix.push_back(matrixTemp);
 	return reduction;

@@ -147,6 +147,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Project_PEA.cpp" />
     <ClCompile Include="ReductionMatrixes.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="ReductionMatrixes.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bays29.tsp" />

@@ -14,17 +14,10 @@ private:
 	ReductionMatrixes* reduction;
 
 public:
-	int firstLowerBound();
-
-	int lowerBound();
-
-	int upperBound();
 
 	int firstUpperBound(int** matrix);
 
 	void permutation(int pathSize, size_t level, size_t prev);
-
-	void erase();
 
 	void init(int** matrix,size_t size);
 	

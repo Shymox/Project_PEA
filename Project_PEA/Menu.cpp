@@ -212,6 +212,22 @@ void Menu::input()
 				std::cout << "\n";
 				value = this->matrix->nearestNeighbour(strt);
 				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
+				std::cout << "Podaj wierzcholek startowy: ";
+				std::cout << "\n";
+				value = this->matrix->nearestNeighbour(strt);
+				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
+				std::cout << "Podaj wierzcholek startowy: ";
+				std::cout << "\n";
+				value = this->matrix->nearestNeighbour(strt);
+				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
+				std::cout << "Podaj wierzcholek startowy: ";
+				std::cout << "\n";
+				value = this->matrix->nearestNeighbour(strt);
+				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
+				std::cout << "Podaj wierzcholek startowy: ";
+				std::cout << "\n";
+				value = this->matrix->nearestNeighbour(strt);
+				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
 				system("pause");
 			}
 			break;
@@ -241,6 +257,14 @@ void Menu::input()
 			break;
 			case 1:
 			{
+				std::cout << "\n";
+				this->matrix->bruteForce();
+				std::cout << "\n";
+				this->matrix->bruteForce();
+				std::cout << "\n";
+				this->matrix->bruteForce();
+				std::cout << "\n";
+				this->matrix->bruteForce();
 				std::cout << "\n";
 				this->matrix->bruteForce();
 				system("pause");
@@ -273,6 +297,14 @@ void Menu::input()
 			{
 				std::cout << "\n";
 				this->matrix->dynamicProgramming();
+				std::cout << "\n";
+				this->matrix->dynamicProgramming();
+				std::cout << "\n";
+				this->matrix->dynamicProgramming();
+				std::cout << "\n";
+				this->matrix->dynamicProgramming();
+				std::cout << "\n";
+				this->matrix->dynamicProgramming();
 				system("pause");
 			}
 			break;
@@ -303,6 +335,15 @@ void Menu::input()
 			{
 				std::cout << "\n";
 				this->matrix->branchAndBound();
+				std::cout << "\n";
+				this->matrix->branchAndBound();
+				std::cout << "\n";
+				this->matrix->branchAndBound();
+				std::cout << "\n";
+				this->matrix->branchAndBound();
+				std::cout << "\n";
+				this->matrix->branchAndBound();
+				std::cout << "\n";
 				system("pause");
 			}
 			break;

@@ -4,6 +4,7 @@
 #include <time.h>
 #include <fstream>
 #include "BranchnBound.h"
+#include "Timer.h"
 
 //Funkcja obliczaj¹ca wartoœæ hardcodowanego cyklu hamiltona
 void Matrix::hamiltonCycle()
@@ -31,6 +32,8 @@ void Matrix::hamiltonCycle()
 //Funkcja realizuj¹ca algorytm Najbli¿szego sasiada
 int Matrix::nearestNeighbour(size_t start)
 {
+	Timer* timer = new Timer();
+	timer->startCounter();
 	int cycle = 0;
 	int temp;
 	List* list = new List();
@@ -54,6 +57,7 @@ int Matrix::nearestNeighbour(size_t start)
 		//dodajemy wybrany wierzcholek do listy
 		list->pushBack(count);
 		cycle += (tmp);
+	
 	}
 	//Obliczamy cykl hamiltona
 	cycle += matrix[list->returnFNode()][list->returnLNode()];
@@ -61,12 +65,16 @@ int Matrix::nearestNeighbour(size_t start)
 	list->display();
 	std::cout << "\n";
 	//zwracamy dlugosc cyklu hamiltona
+	std::cout << "Czas: " << timer->getCounter();
 	return cycle;
 }
 
 void Matrix::bruteForce()
 {
+	Timer *timer = new Timer();
+	timer->startCounter();
 	generatePerm(this->array->returnSize());
+	std::cout << "Czas: " << timer->getCounter();
 	std::cout << "\nKONIEC\n";
 	this->displayAnsBF();
 	
@@ -84,9 +92,11 @@ void Matrix::displayAnsBF()
 }
 void Matrix::dynamicProgramming()
 {
+	Timer* timer = new Timer();
+	timer->startCounter();
 	DynamicProgramming* DP = new DynamicProgramming(this->matrix,this->size);
 	DP->DP(this->matrix);
-	
+	std::cout << "Czas: " << timer->getCounter();
 	DP->display();
 	delete DP;
 }
@@ -202,7 +212,6 @@ void Matrix::generatePerm(int size)
 			{
 				this->array->fSwap(0, size - 1);
 			}
-			generatePerm(size - 1);
 		}
 }
 

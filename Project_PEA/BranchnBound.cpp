@@ -1,20 +1,7 @@
 #include "BranchnBound.h"
 #include <iostream>
+#include "Timer.h"
 
-int BranchnBound::firstLowerBound()
-{
-	return 0;
-}
-
-int BranchnBound::lowerBound()
-{
-	return 0;
-}
-
-int BranchnBound::upperBound()
-{
-	return 0;
-}
 
 int BranchnBound::firstUpperBound(int** matrix)
 {
@@ -43,9 +30,6 @@ void BranchnBound::permutation(int pathSize, size_t level, size_t prev)
 		for (size_t i = level; i < this->size - 1; i++)
 		{
 
-			//int totalCost = this->reduction->pushBack(this->path[level], this->path[level - 1]) + this->reduction->countRoute(this->path, level);
-			//if (totalCost < this->upperbound)
-			//{
 			size_t tmp = path[level];
 			this->path[level] = this->path[i];
 			this->path[i] = tmp;
@@ -65,15 +49,12 @@ void BranchnBound::permutation(int pathSize, size_t level, size_t prev)
 	}
 }
 
-void BranchnBound::erase()
-{
-
-}
-
 void BranchnBound::init(int** matrix, size_t size)
 {
+	Timer* timer = new Timer();
+	timer->startCounter();
 	this->size = size;
-	this->upperbound = INT_MAX;
+	this->upperbound = firstUpperBound(matrix);
 	this->reduction = new ReductionMatrixes(matrix, size);
 	for (int i = 1; i < this->size; i++)
 	{
@@ -81,6 +62,7 @@ void BranchnBound::init(int** matrix, size_t size)
 	}
 	path.size();
 	this->permutation(0, 0, 0);
+	std::cout << "Czas: " << timer->getCounter()<<'\n';
 	std::cout << 0 << " ";
 	for (int i = 0; i < this->size - 1; i++)
 	{
