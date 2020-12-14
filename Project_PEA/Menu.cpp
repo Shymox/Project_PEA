@@ -26,6 +26,12 @@ std::string Menu::nazwa(int page)
 	case 3:
 		return "B&B";
 		break;
+	case 4:
+		return "Simulated Annealing";
+		break;
+	case 5:
+		return "Tabu Search";
+		break;
 	}
 }
 //funkcja ³aduje graf z pliku
@@ -214,21 +220,6 @@ void Menu::input()
 				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
 				std::cout << "Podaj wierzcholek startowy: ";
 				std::cout << "\n";
-				value = this->matrix->nearestNeighbour(strt);
-				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
-				std::cout << "Podaj wierzcholek startowy: ";
-				std::cout << "\n";
-				value = this->matrix->nearestNeighbour(strt);
-				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
-				std::cout << "Podaj wierzcholek startowy: ";
-				std::cout << "\n";
-				value = this->matrix->nearestNeighbour(strt);
-				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
-				std::cout << "Podaj wierzcholek startowy: ";
-				std::cout << "\n";
-				value = this->matrix->nearestNeighbour(strt);
-				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
-				system("pause");
 			}
 			break;
 			case 2:
@@ -257,14 +248,6 @@ void Menu::input()
 			break;
 			case 1:
 			{
-				std::cout << "\n";
-				this->matrix->bruteForce();
-				std::cout << "\n";
-				this->matrix->bruteForce();
-				std::cout << "\n";
-				this->matrix->bruteForce();
-				std::cout << "\n";
-				this->matrix->bruteForce();
 				std::cout << "\n";
 				this->matrix->bruteForce();
 				system("pause");
@@ -297,14 +280,6 @@ void Menu::input()
 			{
 				std::cout << "\n";
 				this->matrix->dynamicProgramming();
-				std::cout << "\n";
-				this->matrix->dynamicProgramming();
-				std::cout << "\n";
-				this->matrix->dynamicProgramming();
-				std::cout << "\n";
-				this->matrix->dynamicProgramming();
-				std::cout << "\n";
-				this->matrix->dynamicProgramming();
 				system("pause");
 			}
 			break;
@@ -335,15 +310,69 @@ void Menu::input()
 			{
 				std::cout << "\n";
 				this->matrix->branchAndBound();
+				system("pause");
+			}
+			break;
+			case 2:
+				this->matrix->display();
+				system("pause");
+				break;
+			case 3:
+				this->load("m6.atsp");
+				this->matrix->hamiltonCycle();
+				system("pause");
+				break;
+
+			}
+			break;
+		case 4:
+			switch (this->index)
+			{
+			case 0:
+			{
+				std::string name;
+				std::cout << "Podaj nazwe pliku: ";
+				std::cin >> name;
+				load(name);
+			}
+			break;
+			case 1:
+			{
+				int select;
+				std::cout << "Wybierz schemat ch³odzenia \n 0:Liniowy \n 1: Nieliniowy";
+				std::cin >> select;
+				std::cout << "\n";
+				this->matrix->simulatedAnnealing(select);
+				system("pause");
+			}
+			break;
+			case 2:
+				this->matrix->display();
+				system("pause");
+				break;
+			case 3:
+				this->load("m6.atsp");
+				this->matrix->hamiltonCycle();
+				system("pause");
+				break;
+
+			}
+			break;
+		case 5:
+			switch (this->index)
+			{
+			case 0:
+			{
+				std::string name;
+				std::cout << "Podaj nazwe pliku: ";
+				std::cin >> name;
+				load(name);
+			}
+			break;
+			case 1:
+			{
 				std::cout << "\n";
 				this->matrix->branchAndBound();
-				std::cout << "\n";
-				this->matrix->branchAndBound();
-				std::cout << "\n";
-				this->matrix->branchAndBound();
-				std::cout << "\n";
-				this->matrix->branchAndBound();
-				std::cout << "\n";
 				system("pause");
 			}
 			break;

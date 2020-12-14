@@ -45,6 +45,8 @@ public:
 
 	void branchAndBound();
 
+	void simulatedAnnealing(int select);
+
 	size_t returnSize();
 
 	void display();
