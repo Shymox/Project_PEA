@@ -30,7 +30,7 @@ std::string Menu::nazwa(int page)
 		return "Simulated Annealing";
 		break;
 	case 5:
-		return "Tabu Search";
+		return "Genetic Algorithm";
 		break;
 	}
 }
@@ -218,8 +218,8 @@ void Menu::input()
 				std::cout << "\n";
 				value = this->matrix->nearestNeighbour(strt);
 				std::cout << "Dlugosc trasy: " << value << " PRD= " << 100 * value / this->matrix->getOptimum() << "%\n";
-				std::cout << "Podaj wierzcholek startowy: ";
 				std::cout << "\n";
+				system("pause");
 			}
 			break;
 			case 2:
@@ -372,7 +372,7 @@ void Menu::input()
 			case 1:
 			{
 				std::cout << "\n";
-				this->matrix->branchAndBound();
+				this->matrix->geneticAlgorithm();
 				system("pause");
 			}
 			break;

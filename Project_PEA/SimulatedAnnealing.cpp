@@ -2,7 +2,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <iostream>
-
+#include "Timer.h"
 
 
 
@@ -30,7 +30,7 @@ void SimulatedAnnealing::init(size_t size, int optimum)
 	this->optimum = optimum;
 	this->path = nullptr;
 	this->pathBest = nullptr;
-	this->Tmin = 0.1;
+	this->Tmin = 0.0001;
 	this->size = size;
 	this->change = size;
 	this->firstTemp();
@@ -66,17 +66,11 @@ void SimulatedAnnealing::firstRandom(int** matrix)
 //obliczanie prawdopodobieñstwa
 float SimulatedAnnealing::propability(int costCurrent, int cost)
 {
-	return M_E-((costCurrent-cost)/this->T);
+	return std::exp(-((costCurrent-cost)/this->T));
 }
 //zamiana wierzcho³ków z obliczeniem nowego kosztu
 int SimulatedAnnealing::swap(int**matrix,int indexA, int indexB)
 {
-	if (indexA > indexB)
-	{
-		int tmp = indexA;
-		indexA = indexB;
-		indexB = tmp;
-	}
 	int temp = this->path[indexA];
 	this->path[indexA] = this->path[indexB];
 	this->path[indexB] = temp;
@@ -89,6 +83,15 @@ int SimulatedAnnealing::swap(int**matrix,int indexA, int indexB)
 	cost += matrix[0][this->path[0]];
 	cost += matrix[this->path[this->size - 2]][0];
 	return cost;
+
+	//if (indexA > indexB)
+	//{
+	//	int tmp = indexA;
+	//	indexA = indexB;
+	//	indexB = tmp;
+	//}
+
+
 	/*if (indexA!=0)
 	{
 		if (indexB != this -> size - 2)
@@ -167,7 +170,7 @@ void SimulatedAnnealing::firstTemp()
 //obliczenie nastêpnej temperatury 1
 float SimulatedAnnealing::newTemp1()
 {
-	return this->T=this->T*0.95;
+	return this->T = this->T * 0.95;
 }
 //obliczenie nastêpnej temperatury 2
 float SimulatedAnnealing::newTemp2()
@@ -178,7 +181,7 @@ float SimulatedAnnealing::newTemp2()
 //losowanie wartoœci od 0 do 1
 float SimulatedAnnealing::random()
 {
-	return rand()%10000*0.0001;
+	return static_cast<float>(rand()) / RAND_MAX;
 }
 
 
@@ -187,16 +190,14 @@ void SimulatedAnnealing::loop1(int** matrix, size_t size)
 {
 	int i = 0;
 	this->newBest();
-	while (this->T > this->Tmin)
+	while (this->T > this->Tmin && i < maxit)
 	{
 		int indexA = rand() % (size - 1);
-		int indexB = rand() % (size - 2);
-		if (indexA <= indexB)
+		int indexB = rand() % (size - 1);
+		if (indexA != indexB)
 		{
-			indexB++;
-		}
-		this->costCurrent = this->swap(matrix, indexA, indexB);
-			if (this->cost > this->costCurrent)
+			this->costCurrent = this->swap(matrix, indexA, indexB);
+			if (this->cost > this->costCurrent || this->random() < this->propability(this->costCurrent, this->cost))
 			{
 				this->cost = this->costCurrent;
 				this->list.push_front(this->cost);
@@ -207,17 +208,7 @@ void SimulatedAnnealing::loop1(int** matrix, size_t size)
 				if (this->cost < this->costBest)
 				{
 					this->newBest();
-					std::cout << '\n' << i << " ";
-					std::cout << " PRD: " << 100 * this->costBest / this->optimum << '\n';
-				}
-			}
-			else if (this->random() < this->propability(this->costCurrent, this->cost))
-			{
-				this->cost = this->costCurrent;
-				this->list.push_front(this->cost);
-				if (this->list.size() > 100)
-				{
-					this->list.pop_back();
+					//std::cout << '\n' << i << " Cost: " << this->costBest << " PRD: " << 100 * this->costBest / this->optimum << '\n';
 				}
 			}
 			else {
@@ -226,16 +217,13 @@ void SimulatedAnnealing::loop1(int** matrix, size_t size)
 			}
 			this->T = newTemp1();
 			i++;
-			if ( (this->list.size()>this->size*2 || this->list.size()>=100) && this->calculateVariance() < 10)
+			if (this->list.size() >= 100 && this->calculateVariance() < 10)
 			{
 				this->T += this->change;
 				this->change = this->change * 1.25;
 				this->firstRandom(matrix);
 			}
-			if(i>maxit)
-			{
-				break;
-			}
+		}
 
 	}
 }
@@ -244,56 +232,40 @@ void SimulatedAnnealing::loop2(int** matrix, size_t size)
 {
 	int i = 0;
 	this->newBest();
-	while (this->T > this->Tmin)
+	while (this->T > this->Tmin && i < maxit)
 	{
 		int indexA = rand() % (size - 1);
-		int indexB = rand() % (size - 2);
-		if (indexA <= indexB)
+		int indexB = rand() % (size - 1);
+		if (indexA != indexB)
 		{
-			indexB++;
-		}
-		this->costCurrent = this->swap(matrix, indexA, indexB);
-		if (this->cost > this->costCurrent)
-		{
-			this->cost = this->costCurrent;
-			this->list.push_front(this->cost);
-			if (this->list.size() > 100)
+			this->costCurrent = this->swap(matrix, indexA, indexB);
+			if (this->cost > this->costCurrent || this->random() < this->propability(this->costCurrent, this->cost))
 			{
-				this->list.pop_back();
+				this->cost = this->costCurrent;
+				this->list.push_front(this->cost);
+				if (this->list.size() > 100)
+				{
+					this->list.pop_back();
+				}
+				if (this->cost < this->costBest)
+				{
+					this->newBest();
+					//std::cout << '\n' << i <<" Cost: "<<this->costBest<< " PRD: " << 100 * this->costBest / this->optimum << '\n';
+				}
 			}
-			if (this->cost < this->costBest)
-			{
-				this->newBest();
-				std::cout << '\n' << i << " ";
-				std::cout << " PRD: " << 100 * this->costBest / this->optimum << '\n';
-			}
-		}
-		else if (this->random() < this->propability(this->costCurrent, this->cost))
-		{
-			this->cost = this->costCurrent;
-			this->list.push_front(this->cost);
-			if (this->list.size() > 100)
-			{
-				this->list.pop_back();
-			}
-		}
-		else {
+			else {
 
-			this->swap(matrix, indexA, indexB);
+				this->swap(matrix, indexA, indexB);
+			}
+			this->T = newTemp2();
+			i++;
+			if (this->list.size() >= 100 && this->calculateVariance() < 10)
+			{
+				this->T += this->change;
+				this->change = this->change * 1.25;
+				this->firstRandom(matrix);
+			}
 		}
-		this->T = newTemp2();
-		i++;
-		if ((this->list.size() > this->size * 2 || this->list.size() >= 100) && this->calculateVariance() < 10)
-		{
-			this->T += this->change;
-			this->change = this->change * 1.25;
-			this->firstRandom(matrix);
-		}
-		if (i > maxit)
-		{
-			break;
-		}
-
 	}
 }
 
@@ -320,13 +292,105 @@ void SimulatedAnnealing::displayBest()
 
 SimulatedAnnealing::SimulatedAnnealing(int** matrix, size_t size,int optimum,int select)
 {
+	Timer* timer = new Timer();
+	int prd=0;
+	int prd2 = 0;
+	float time=0;
+	float time2 = 0;
+	timer->startCounter();
 	this->init(size,optimum);
 	this->firstRandom(matrix);
-	if (select == 0)
+	//if (select == 0)
 	this->loop1(matrix, size);
-	else
-	this->loop2(matrix, size);
+	time+=timer->getCounter();
 	this->displayBest();
+	prd+= 100 * this->costBest/optimum;
+
+	timer->startCounter();
+	this->init(size, optimum);
+	this->firstRandom(matrix);
+	//if (select == 0)
+	this->loop1(matrix, size);
+	time += timer->getCounter();
+	this->displayBest();
+	prd += 100 * this->costBest / optimum;
+
+	timer->startCounter();
+	this->init(size, optimum);
+	this->firstRandom(matrix);
+	//if (select == 0)
+	this->loop1(matrix, size);
+	time += timer->getCounter();
+	this->displayBest();
+	prd += 100 * this->costBest / optimum;
+
+	timer->startCounter();
+	this->init(size, optimum);
+	this->firstRandom(matrix);
+	//if (select == 0)
+	this->loop1(matrix, size);
+	time += timer->getCounter();
+	this->displayBest();
+	prd += 100 * this->costBest / optimum;
+
+	timer->startCounter();
+	this->init(size, optimum);
+	this->firstRandom(matrix);
+	//if (select == 0)
+	this->loop1(matrix, size);
+	time += timer->getCounter();
+	this->displayBest();
+	prd += 100 * this->costBest / optimum;
+	std::cout << "PRD: " << prd/5 << " czas: " << static_cast<float>(time)/5;
+	//else
+
+	timer->startCounter();
+	this->init(size, optimum);
+	this->firstRandom(matrix);
+	//if (select == 0)
+	this->loop2(matrix, size);
+	time2 += timer->getCounter();
+	this->displayBest();
+	prd2 += 100 * this->costBest / optimum;
+
+	timer->startCounter();
+	this->init(size, optimum);
+	this->firstRandom(matrix);
+	//if (select == 0)
+	this->loop2(matrix, size);
+	time2 += timer->getCounter();
+	this->displayBest();
+	prd2 += 100 * this->costBest / optimum;
+
+	timer->startCounter();
+	this->init(size, optimum);
+	this->firstRandom(matrix);
+	//if (select == 0)
+	this->loop2(matrix, size);
+	time2 += timer->getCounter();
+	this->displayBest();
+	prd2 += 100 * this->costBest / optimum;
+
+	timer->startCounter();
+	this->init(size, optimum);
+	this->firstRandom(matrix);
+	//if (select == 0)
+	this->loop2(matrix, size);
+	time2 += timer->getCounter();
+	this->displayBest();
+	prd2 += 100 * this->costBest / optimum;
+
+	timer->startCounter();
+	this->init(size, optimum);
+	this->firstRandom(matrix);
+	//if (select == 0)
+	this->loop2(matrix, size);
+	time2 += timer->getCounter();
+	this->displayBest();
+	prd2 += 100*this->costBest / optimum;
+
+	std::cout << "PRD: " << prd2 / 5 << " czas: " << static_cast<float>(time2) / 5;
+	
 }
 
 SimulatedAnnealing::~SimulatedAnnealing()

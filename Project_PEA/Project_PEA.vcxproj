@@ -142,6 +142,7 @@
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="BranchnBound.cpp" />
     <ClCompile Include="DynamicProgramming.cpp" />
+    <ClCompile Include="GeneticAlgorithm.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Array.h" />
     <ClInclude Include="BranchnBound.h" />
     <ClInclude Include="DynamicProgramming.h" />
+    <ClInclude Include="GeneticAlgorithm.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Menu.h" />

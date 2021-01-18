@@ -6,6 +6,7 @@
 #include "BranchnBound.h"
 #include "Timer.h"
 #include "SimulatedAnnealing.h"
+#include "GeneticAlgorithm.h"
 
 //Funkcja obliczaj¹ca wartoœæ hardcodowanego cyklu hamiltona
 void Matrix::hamiltonCycle()
@@ -220,6 +221,11 @@ void Matrix::branchAndBound()
 {
 	BranchnBound* branchNbound = new BranchnBound(this->matrix, this->size);
 	delete branchNbound;
+}
+
+void Matrix::geneticAlgorithm()
+{
+	GeneticAlgorithm* geneticalgorithm = new GeneticAlgorithm(this->matrix, this->size,this->optimum);
 }
 
 void Matrix::simulatedAnnealing(int select)

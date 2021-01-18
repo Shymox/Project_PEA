@@ -45,6 +45,8 @@ public:
 
 	void branchAndBound();
 
+	void geneticAlgorithm();
+
 	void simulatedAnnealing(int select);
 
 	size_t returnSize();
