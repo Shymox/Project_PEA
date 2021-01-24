@@ -1,6 +1,9 @@
 #include <vector>
+#include <random>
 #pragma once
  
+
+
 struct specimen
 {
 	int cost;
@@ -20,9 +23,11 @@ private:
 	std::vector<specimen>* populationBreading;
 	int** matrix;
 	int optimum;
+	size_t iteration;
+	int period;
 
 public:
-	void init(int** matrix, size_t size,int optimum);
+	void init(int** matrix, size_t size,int optimum,int period);
 
 	void firstPopulation();
 
@@ -47,7 +52,7 @@ public:
 	void erase();
 
 
-	GeneticAlgorithm(int** matrix, size_t size,int optimum);
+	GeneticAlgorithm(int** matrix, size_t size,int optimum,int period);
 
 	~GeneticAlgorithm();
 	

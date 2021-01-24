@@ -223,9 +223,9 @@ void Matrix::branchAndBound()
 	delete branchNbound;
 }
 
-void Matrix::geneticAlgorithm()
+void Matrix::geneticAlgorithm(int period)
 {
-	GeneticAlgorithm* geneticalgorithm = new GeneticAlgorithm(this->matrix, this->size,this->optimum);
+	GeneticAlgorithm* geneticalgorithm = new GeneticAlgorithm(this->matrix, this->size,this->optimum,period);
 }
 
 void Matrix::simulatedAnnealing(int select)

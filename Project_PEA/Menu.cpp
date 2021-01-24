@@ -372,7 +372,10 @@ void Menu::input()
 			case 1:
 			{
 				std::cout << "\n";
-				this->matrix->geneticAlgorithm();
+				int period;
+				std::cout << "Podaj nazwe czas trwania obliczen: ";
+				std::cin >> period;
+				this->matrix->geneticAlgorithm(period);
 				system("pause");
 			}
 			break;

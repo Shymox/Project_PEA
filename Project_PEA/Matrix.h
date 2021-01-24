@@ -45,7 +45,7 @@ public:
 
 	void branchAndBound();
 
-	void geneticAlgorithm();
+	void geneticAlgorithm(int period);
 
 	void simulatedAnnealing(int select);
 

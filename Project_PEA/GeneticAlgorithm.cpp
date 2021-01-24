@@ -1,16 +1,33 @@
 #include "GeneticAlgorithm.h"
 #include <iostream>
 #include <time.h>
+#include <random>
 
-void GeneticAlgorithm::init(int** matrix, size_t size, int optimum)
+std::default_random_engine generator;
+
+int random(int i) {
+	std::uniform_int_distribution<int> distribution(0, i - 1);
+	return distribution(generator);
+}
+
+
+double fRand(double fMin, double fMax)  // random double
 {
+	double f = (double)random(RAND_MAX) / RAND_MAX;
+	return fMin + f * (fMax - fMin);
+}
+
+void GeneticAlgorithm::init(int** matrix, size_t size, int optimum,int period)
+{
+	generator.seed(time(NULL));
 	this->best.cost = INT_MAX;
+	this->period = period;
+	this->iteration = 0;
 	this->matrix = matrix;
 	this->size = size-1;
 	this->optimum = optimum;
 	this->population = new std::vector<specimen>;
 	this->populationBreading = new std::vector<specimen>;
-	srand(time(NULL));
 	this->firstPopulation();
 }
 
@@ -19,16 +36,16 @@ void GeneticAlgorithm::firstPopulation()
 	for (int i = 0; i < POPULATIONSIZE; i++)
 	{
 		specimen specimen;
-		for (int i = 0; i < this->size - 1; i++)
+		for (int k = 0; k < this->size - 1; k++)
 		{
-			specimen.path.push_back( i + 1);
+			specimen.path.push_back( k + 1);
 		}
-		for (int i = 0; i < this->size - 2; i++)
+		for (int k = 0; k < this->size - 2; k++)
 		{
-			int j = rand() % (this->size - 1 - i);
-			int tmp = specimen.path[i];
-			specimen.path[i] = specimen.path[j + i];
-			specimen.path[j + i] = tmp;
+			int j = fRand(0.0, (this->size - 1 - k));
+			int tmp = specimen.path[k];
+			specimen.path[k] = specimen.path[j + k];
+			specimen.path[j + k] = tmp;
 		}
 		specimen.cost = calcCost(specimen);
 		this->checkIfBest(specimen);
@@ -38,23 +55,44 @@ void GeneticAlgorithm::firstPopulation()
 
 void GeneticAlgorithm::mutate(specimen &specimen)
 {
-	if (rand() % RAND_MAX > this->mutationPropability)
+	if (fRand(0.0,1.0) < this->mutationPropability)
 	{
-		size_t indexA = rand() % (specimen.path.size() - 1);
-		size_t indexB = rand() % (specimen.path.size() - 1);
+		size_t indexA = random(specimen.path.size() - 1);
+		size_t indexB = random(specimen.path.size() - 1);
 		int temp = specimen.path[indexA];
 		specimen.path[indexA] = specimen.path[indexB];
 		specimen.path[indexB] = temp;
 	}
 }
+//inspiracja https://stackoverflow.com/questions/1544055/crossover-operation-in-genetic-algorithm-for-tsp/11584750#11584750
+
 
 specimen GeneticAlgorithm::cross(specimen &parent1, specimen &parent2)
 {
 	specimen child;
-	if (rand() % RAND_MAX > crossoverPropability)
+	if (fRand(0.0,1.0) < crossoverPropability)
 	{
-		size_t crossStart = rand() % (this->size - 1);
-		size_t crossEnd = rand() % (this->size - 1 - crossStart) + crossStart;
+		size_t crossStart =  random(this->size - 1);
+		size_t crossEnd =  random(this->size - 1 - crossStart) + crossStart;
+		child.path = parent1.path;
+		int* map=new int[child.path.size()];
+		for (int i = 0; i < child.path.size(); i++)
+		{
+			map[child.path[i]-1] = i;
+		}
+		for (int i = crossStart; i <= crossEnd; i++)
+		{
+			int newVal = parent2.path[i];
+			int temp = child.path[map[newVal-1]];
+			child.path[map[newVal-1]] = child.path[i];
+			child.path[i] = temp;
+			temp = map[child.path[map[newVal-1]]-1];
+			map[child.path[map[newVal-1]]-1] = map[child.path[i]-1];
+			map[child.path[i]-1] = temp;
+		}
+		delete[] map;
+		/*size_t crossStart = random(this->size - 1);
+		size_t crossEnd = random(this->size - 1 - crossStart) + crossStart;
 		child.path = parent1.path;
 		for (int i = crossStart; i <= crossEnd; i++)
 		{
@@ -68,8 +106,8 @@ specimen GeneticAlgorithm::cross(specimen &parent1, specimen &parent2)
 					child.path[i] = map;
 					break;
 				}
-			}
-		}
+			} 
+		}*/
 	}
 	else
 	{
@@ -98,8 +136,8 @@ void GeneticAlgorithm::selectTournament()
 	this->populationBreading = new std::vector<specimen>;
 	for (int i = 0; i < POPULATIONSIZE; i++)
 	{
-		size_t parent1 = rand() % (POPULATIONSIZE - 1);
-		size_t parent2 = rand() % (POPULATIONSIZE - 1);
+		size_t parent1 = random(POPULATIONSIZE - 1);
+		size_t parent2 = random(POPULATIONSIZE - 1);
 		if (this->population->at(parent1).cost>this->population->at(parent2).cost)
 		{
 			this->populationBreading->push_back(this->population->at(parent2));
@@ -117,8 +155,8 @@ void GeneticAlgorithm::makeNewPopulation()
 	this->population = new std::vector<specimen>;
 	for (int i = 0; i < this->POPULATIONSIZE/2;i++)
 	{
-		size_t parent1 = rand()%(POPULATIONSIZE - 1);
-		size_t parent2 = rand()%(POPULATIONSIZE - 1);
+		size_t parent1 = random(POPULATIONSIZE - 1);
+		size_t parent2 = random(POPULATIONSIZE - 1);
 		specimen child1 = cross(this->populationBreading->at(parent1), this->populationBreading->at(parent2));
 		specimen child2 = cross(this->populationBreading->at(parent2), this->populationBreading->at(parent1));
 		this->mutate(child1);
@@ -136,6 +174,7 @@ void GeneticAlgorithm::checkIfBest(specimen &specimen)
 	{
 		this->best.path = specimen.path;
 		this->best.cost = specimen.cost;
+		//std::cout << '\n' << iteration << " Cost: " << this->best.cost << " PRD: " << 100 * this->best.cost / this->optimum << '\n';
 	}
 }
 
@@ -148,10 +187,11 @@ void GeneticAlgorithm::copyPopulation(std::vector<specimen>* population)
 void GeneticAlgorithm::loop()
 {
 	start = time(NULL);
-	while (start+15>time(NULL))
+	while (start+this->period>time(NULL))
 	{
 		this->selectTournament();
 		this->makeNewPopulation();
+		this->iteration++;
 	}
 }
 
@@ -167,12 +207,15 @@ void GeneticAlgorithm::displayBest()
 
 void GeneticAlgorithm::erase()
 {
-
+	delete this->population;
+	delete this->populationBreading;
+	this->population=nullptr;
+	this->populationBreading=nullptr;
 }
 
-GeneticAlgorithm::GeneticAlgorithm(int** matrix, size_t size,int optimum)
+GeneticAlgorithm::GeneticAlgorithm(int** matrix, size_t size,int optimum,int period)
 {
-	this->init(matrix, size, optimum);
+	this->init(matrix, size, optimum,period);
 	this->loop();
 	this->displayBest();
 	
@@ -180,4 +223,5 @@ GeneticAlgorithm::GeneticAlgorithm(int** matrix, size_t size,int optimum)
 
 GeneticAlgorithm::~GeneticAlgorithm()
 {
+	this->erase();
 }
