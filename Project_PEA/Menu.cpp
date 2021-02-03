@@ -32,6 +32,9 @@ std::string Menu::nazwa(int page)
 	case 5:
 		return "Genetic Algorithm";
 		break;
+	case 6:
+		return "Ant Colony Optimalisation";
+		break;
 	}
 }
 //funkcja ³aduje graf z pliku
@@ -371,11 +374,106 @@ void Menu::input()
 			break;
 			case 1:
 			{
-				std::cout << "\n";
-				int period;
-				std::cout << "Podaj nazwe czas trwania obliczen: ";
-				std::cin >> period;
-				this->matrix->geneticAlgorithm(period);
+				//this->load("m12.atsp");
+				//std::cout << "m12.atsp;\n";
+				//	for (int j = 1; j < 4; j++)
+				//	{
+				//		std::cout << j * 50 << ";\n";
+				//		this->matrix->geneticAlgorithm(5, j * 50);
+				//		this->matrix->geneticAlgorithm(15, j * 50);
+				//		this->matrix->geneticAlgorithm(30, j * 50);
+				//		this->matrix->geneticAlgorithm(45, j * 50);
+				//	}
+				//this->load("gr17.tsp");
+				//for (int j = 1; j < 4; j++)
+				//{
+				//	std::cout << j * 50 << ";\n";
+				//	this->matrix->geneticAlgorithm(5, j * 50);
+				//	this->matrix->geneticAlgorithm(15, j * 50);
+				//	this->matrix->geneticAlgorithm(30, j * 50);
+				//	this->matrix->geneticAlgorithm(45, j * 50);
+				//}
+				//this->load("ftv33.atsp");
+				//for (int j = 1; j < 4; j++)
+				//{
+				//	std::cout << j * 50 << ";\n";
+				//	this->matrix->geneticAlgorithm(5, j * 50);
+				//	this->matrix->geneticAlgorithm(15, j * 50);
+				//	this->matrix->geneticAlgorithm(30, j * 50);
+				//	this->matrix->geneticAlgorithm(45, j * 50);
+				//}
+				//this->load("ft70.atsp");
+				//for (int j = 1; j < 4; j++)
+				//{
+				//	std::cout << j * 50 << ";\n";
+				//	this->matrix->geneticAlgorithm(5, j * 50);
+				//	this->matrix->geneticAlgorithm(15, j * 50);
+				//	this->matrix->geneticAlgorithm(30, j * 50);
+				//	this->matrix->geneticAlgorithm(45, j * 50);
+				//}
+				//this->load("pr107.tsp");
+				//for (int j = 1; j < 4; j++)
+				//{
+				//	std::cout << j * 50 << ";\n";
+				//	this->matrix->geneticAlgorithm(5, j * 50);
+				//	this->matrix->geneticAlgorithm(15, j * 50);
+				//	this->matrix->geneticAlgorithm(30, j * 50);
+				//	this->matrix->geneticAlgorithm(45, j * 50);
+				//}
+				this->load("pr152.tsp");
+				for (int j = 1; j < 4; j++)
+				{
+					std::cout << j * 50 << ";\n";
+					this->matrix->geneticAlgorithm(5, j * 50);
+					this->matrix->geneticAlgorithm(15, j * 50);
+					this->matrix->geneticAlgorithm(30, j * 50);
+					this->matrix->geneticAlgorithm(45, j * 50);
+				}
+				this->load("gil262.tsp");
+				for (int j = 1; j < 4; j++)
+				{
+					std::cout << j * 50 << ";\n";
+					this->matrix->geneticAlgorithm(5, j * 50);
+					this->matrix->geneticAlgorithm(15, j * 50);
+					this->matrix->geneticAlgorithm(30, j * 50);
+					this->matrix->geneticAlgorithm(45, j * 50);
+				}
+				system("pause");
+				system("pause");
+				system("pause");
+				system("pause");
+			}
+			break;
+			case 2:
+				this->matrix->display();
+				system("pause");
+				break;
+			case 3:
+				this->load("m6.atsp");
+				this->matrix->hamiltonCycle();
+				system("pause");
+				break;
+
+			}
+			break;
+
+		case 6:
+			switch (this->index)
+			{
+			case 0:
+			{
+				std::string name;
+				std::cout << "Podaj nazwe pliku: ";
+				std::cin >> name;
+				load(name);
+			}
+			break;
+			case 1:
+			{
+				int temp;
+				std::cout << "Podaj Czas dzialania\n";
+				std::cin >> temp;
+				this->matrix->antAlgorithm(temp, 10, 1, 0.5, 1);
 				system("pause");
 			}
 			break;

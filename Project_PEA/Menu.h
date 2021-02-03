@@ -9,7 +9,7 @@ private:
 	int page=0;
 	int index=0;
 	bool exit = true;
-	const int SIZEX = 5;
+	const int SIZEX = 6;
 	const int SIZEY =3;
 
 	std::string nazwa(int page);

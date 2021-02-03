@@ -16,7 +16,7 @@ private:
 	time_t start;
 	double mutationPropability = 0.01;
 	double crossoverPropability = 0.7;
-	int POPULATIONSIZE=100;
+	int POPULATIONSIZE;
 	specimen best;
 	size_t size;
 	std::vector<specimen>* population;
@@ -27,7 +27,7 @@ private:
 	int period;
 
 public:
-	void init(int** matrix, size_t size,int optimum,int period);
+	void init(int** matrix, size_t size,int optimum,int period, int populationSize);
 
 	void firstPopulation();
 
@@ -47,12 +47,14 @@ public:
 
 	void loop();
 
+	void test();
+
 	void displayBest();
 
 	void erase();
 
 
-	GeneticAlgorithm(int** matrix, size_t size,int optimum,int period);
+	GeneticAlgorithm(int** matrix, size_t size,int optimum,int period,int populationSize);
 
 	~GeneticAlgorithm();
 	

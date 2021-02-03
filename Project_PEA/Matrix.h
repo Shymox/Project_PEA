@@ -45,7 +45,9 @@ public:
 
 	void branchAndBound();
 
-	void geneticAlgorithm(int period);
+	void antAlgorithm(int period, int antsNumber, int startPheromone, float evaporation, float constant);
+
+	void geneticAlgorithm(int period,int populationSize);
 
 	void simulatedAnnealing(int select);
 

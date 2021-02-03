@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AntAlgorithm.cpp" />
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="BranchnBound.cpp" />
     <ClCompile Include="DynamicProgramming.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AntAlgorithm.h" />
     <ClInclude Include="Array.h" />
     <ClInclude Include="BranchnBound.h" />
     <ClInclude Include="DynamicProgramming.h" />

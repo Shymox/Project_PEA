@@ -17,9 +17,10 @@ double fRand(double fMin, double fMax)  // random double
 	return fMin + f * (fMax - fMin);
 }
 
-void GeneticAlgorithm::init(int** matrix, size_t size, int optimum,int period)
+void GeneticAlgorithm::init(int** matrix, size_t size, int optimum,int period,int populationSize)
 {
 	generator.seed(time(NULL));
+	this->POPULATIONSIZE = populationSize;
 	this->best.cost = INT_MAX;
 	this->period = period;
 	this->iteration = 0;
@@ -36,11 +37,11 @@ void GeneticAlgorithm::firstPopulation()
 	for (int i = 0; i < POPULATIONSIZE; i++)
 	{
 		specimen specimen;
-		for (int k = 0; k < this->size - 1; k++)
+		for (int k = 0; k < this->size; k++)
 		{
 			specimen.path.push_back( k + 1);
 		}
-		for (int k = 0; k < this->size - 2; k++)
+		for (int k = 0; k < this->size - 1; k++)
 		{
 			int j = fRand(0.0, (this->size - 1 - k));
 			int tmp = specimen.path[k];
@@ -121,12 +122,12 @@ specimen GeneticAlgorithm::cross(specimen &parent1, specimen &parent2)
 int GeneticAlgorithm::calcCost(specimen &specimen)
 {
 	int cost = 0;
-	for (int i = 1; i < this->size - 1; i++)
+	for (int i = 1; i < this->size; i++)
 	{
 		cost += matrix[specimen.path[i - 1]][specimen.path[i]];
 	}
 	cost += matrix[0][specimen.path[0]];
-	cost += matrix[specimen.path[this->size - 2]][0];
+	cost += matrix[specimen.path[this->size - 1]][0];
 	return cost;
 }
 
@@ -194,15 +195,19 @@ void GeneticAlgorithm::loop()
 		this->iteration++;
 	}
 }
+void GeneticAlgorithm::test()
+{
+	std::cout << this->best.cost << "; " << this->optimum << "; " << this->iteration << ";\n";
+}
 
 void GeneticAlgorithm::displayBest()
 {
 	std::cout << "\n 0 ";
-	for (size_t i = 0; i < this->size - 1; i++)
+	for (size_t i = 0; i < this->size; i++)
 	{
 		std::cout << this->best.path[i] << " ";
 	}
-	std::cout << "Cost: " << this->best.cost << " PRD:" << 100 * this->best.cost / this->optimum << '\n';
+	//std::cout << "Cost: " << this->best.cost << " PRD:" << 100 * this->best.cost / this->optimum << '\n';
 }
 
 void GeneticAlgorithm::erase()
@@ -213,11 +218,12 @@ void GeneticAlgorithm::erase()
 	this->populationBreading=nullptr;
 }
 
-GeneticAlgorithm::GeneticAlgorithm(int** matrix, size_t size,int optimum,int period)
+GeneticAlgorithm::GeneticAlgorithm(int** matrix, size_t size,int optimum,int period,int populationSize)
 {
-	this->init(matrix, size, optimum,period);
+	this->init(matrix, size, optimum,period,populationSize);
 	this->loop();
-	this->displayBest();
+	//this->displayBest();
+	this->test();
 	
 }
 

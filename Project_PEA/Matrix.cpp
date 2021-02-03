@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include "SimulatedAnnealing.h"
 #include "GeneticAlgorithm.h"
+#include "AntAlgorithm.h"
 
 //Funkcja obliczaj¹ca wartoœæ hardcodowanego cyklu hamiltona
 void Matrix::hamiltonCycle()
@@ -223,9 +224,14 @@ void Matrix::branchAndBound()
 	delete branchNbound;
 }
 
-void Matrix::geneticAlgorithm(int period)
+void Matrix::antAlgorithm(int period, int antsNumber, int startPheromone, float evaporation, float constant)
 {
-	GeneticAlgorithm* geneticalgorithm = new GeneticAlgorithm(this->matrix, this->size,this->optimum,period);
+	AntAlgorithm* antAlgorithm = new AntAlgorithm(this->matrix, this->size, this->optimum, period, antsNumber, startPheromone, evaporation, constant);
+}
+
+void Matrix::geneticAlgorithm(int period,int populationSize)
+{
+	GeneticAlgorithm* geneticalgorithm = new GeneticAlgorithm(this->matrix, this->size,this->optimum,period,populationSize);
 }
 
 void Matrix::simulatedAnnealing(int select)
